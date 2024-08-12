@@ -1,0 +1,127 @@
+html {
+    zoom: 0.8;
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 90%;
+    -ms-text-size-adjust: 90%
+}
+
+body {
+    font-family: sans-serif;
+    background-image: url('testBGfinal.png');
+    background-repeat: no-repeat;
+    background-size: 1500px 1500px;
+    background-position: center center;
+    /* background-position-y: top; */
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.card {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+    background-color: #ffffffa2;
+    box-shadow: 2px 2px 12px 1px rgba(140,140,140,1);
+}
+
+.card2 {
+    border: 1px solid #ccc;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    width: 285px;
+    text-align: center;
+    background-color: #ffffffa2;
+}
+
+button {
+    background-color: black;
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+
+span {
+    font-size: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+/* th {
+    background-color: white;
+} */
+
+.container-gap {
+    margin-top: 10px;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f3f3f3;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 10px 10px 10px 10px;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+}
+
+select option {
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.photo-container {
+    display: flex;
+    justify-content: center;
+}
+
+.photo {
+    width: 150px;
+    height: 150px;
+    /* display: center; */
+    /* text-align: center; */
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: none;
+    border-radius: 10px;
+}
+
+.photo-text {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uric Acid Meter</title>
+    <link rel="stylesheet" href="assets/style6.css" />
+  </head>
+  <body>
+    <div class="photo-container">
+      <div>
+        <img class="photo" src="assets/t_firman.png" />
+        <div class="photo-text">FIRMAN ELDY BAITNYA</div>
+        <div class="photo-text">02522043</div>
+      </div>
+      <div>
+        <img class="photo" src="assets/t_gilang.png" />
+        <div class="photo-text">GILANG CAHYA N.</div>
+        <div class="photo-text">02522046</div>
+      </div>
+      <div>
+        <img class="photo" src="assets/t_ikhram.png" />
+        <div class="photo-text">IKHRAM RAMADHAN Z.</div>
+        <div class="photo-text">02522052</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <h3>Asam Urat</h3>
+        <div>
+          <canvas style="margin: none" id="gauge-humidity"></canvas>
+        </div>
+        <div style="display: none;" id="asamUratID" name="asamUrat">%asamUrat%</div>
+        <span>Saran :</span>
+        <span id="saranID">%saran%</span>
+        <h4>Mode :</h4>
+        <form action="/execute" method="post">
+          <select id="modeID" name="mode">
+            <option value="anak">Anak-anak</option>
+            <option value="dewasa">Dewasa</option>
+            <option value="lansia">Lansia</option>
+          </select>
+          <p><button type="submit">Ubah</button></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="container container-gap">
+      <div class="table-container">
+        <div class="card2">
+          <h3>Puasa</h3>
+          <table>
+            <tr>
+              <th>Anak-anak</th>
+              <td id="puasaAnakID">%puasaAnak%</td>
+            </tr>
+            <tr>
+              <th>Dewasa</th>
+              <td id="puasaDewasaID">%puasaDewasa%</td>
+            </tr>
+            <tr>
+              <th>Lansia</th>
+              <td id="puasaLansiaID">%puasaLansia%</td>
+            </tr>
+          </table>
+        </div>
+        <div class="card2">
+          <h3>Tidak Puasa</h3>
+          <table>
+            <tr>
+              <th>Anak-anak</th>
+              <td id="tidakPuasaAnakID">%tidakPuasaAnak%</td>
+            </tr>
+            <tr>
+              <th>Dewasa</th>
+              <td id="tidakPuasaDewasaID">%tidakPuasaDewasa%</td>
+            </tr>
+            <tr>
+              <th>Lansia</th>
+              <td id="tidakPuasaLansiaID">%tidakPuasaLansia%</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="assets/gauge.min.js"></script>
+    <script>
+      function setSelect(id, value) {
+        var dd = document.getElementById(id);
+        for (var i = 0; i < dd.options.length; i++) {
+          if (dd.options[i].value == value) {
+            dd.selectedIndex = i;
+            break;
+          }
+        }
+      }
+
+      var selectedMode = "%mode%";
+      setSelect("modeID", selectedMode);
+    </script>
+
+    <script>
+      //Gauge Asam Urat
+      var gaugeAsamUrat = new RadialGauge({
+        renderTo: "gauge-humidity",
+        width: 250,
+        height: 250,
+        units: "mg/dl",
+        minValue: 0,
+        maxValue: 10,
+        colorValueBoxRect: "rgb(255,255,255, 0)",
+        colorValueBoxRectEnd: "rgb(255,255,255, 0)",
+        colorValueBoxBackground: "rgb(255,255,255, 0)",
+        valueInt: 1,
+        valueDec: 1,
+        barWidth: 2,
+        //   value:4.,
+        // valueBox: false,
+        fontUnitsSize: 35,
+        fontValueSize: 50,
+        fontNumbersSize: 30,
+        fontNumbersWeight: "bold",
+        fontUnitsWeight: "bold",
+        majorTicks: ["0", "2", "4", "6", "8", "10"],
+        minorTicks: 10,
+        strokeTicks: true,
+        highlights: [
+          {
+            from: 7,
+            to: 10,
+            color: "rgb(240,0,0, 0.7)",
+          },
+        ],
+        colorPlate: "rgb(255,255,255, 0)",
+        borderShadowWidth: 0,
+        borders: false,
+        needleType: "arrow",
+        colorNeedle: "#8c0900",
+        colorNeedleEnd: "#e65719",
+        needleWidth: 3,
+        needleCircleSize: 7,
+        colorNeedleCircleOuter: "#000000",
+        needleCircleOuter: true,
+        needleCircleInner: true,
+        animationDuration: 500,
+        animationRule: "linear",
+      }).draw();
+
+      window.onload = function() {
+        gaugeAsamUrat.value = "%asamUrat%";
+      }
+
+      if (!!window.EventSource) {
+        var source = new EventSource("/events");
+
+        source.addEventListener('saran', function(e) {
+          console.log("Saran :", e.data);
+          document.getElementById("saranID").innerHTML = e.data;
+        }, false);
+
+        source.addEventListener("asamUrat", function (e) {
+            document.getElementById("asamUratID").innerHTML = e.data;
+
+            var asamUrat = parseFloat(e.data).toFixed(1);
+
+            console.log("Asam Urat : ", asamUrat);
+            gaugeAsamUrat.value = asamUrat;
+          },
+          false
+        );
+      }
+    </script>
+  </body>
+</html>
